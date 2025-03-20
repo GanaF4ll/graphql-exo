@@ -1,0 +1,110 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  email: String!
+  password: String!
+  firstname: String
+  lastname: String
+  created_at: DateTime
+  updated_at: DateTime
+  articles: [Article!]
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Article {
+  """id"""
+  id: String!
+
+  """Titre de l'article"""
+  title: String!
+
+  """Contenu de l'article"""
+  content: String!
+
+  """Nom de l'auteur"""
+  author: User!
+
+  """Date de création de l'article"""
+  createdAt: DateTime
+
+  """Date de mise à jour de l'article"""
+  updatedAt: DateTime
+}
+
+type LoginResponse {
+  user: User!
+  access_token: String!
+}
+
+type LogoutResponse {
+  message: String!
+}
+
+type Query {
+  articles: [Article!]!
+  article(id: Int!): Article!
+  users: [User!]!
+  user(id: Int!): User!
+}
+
+type Mutation {
+  createArticle(createArticleInput: CreateArticleInput!): Article!
+  updateArticle(updateArticleInput: UpdateArticleInput!): Article!
+  removeArticle(id: Int!): Article!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  login(input: LoginInput!): LoginResponse!
+  signup(input: CreateUserInput!): LoginResponse!
+  logout: LogoutResponse!
+}
+
+input CreateArticleInput {
+  """Titre de l'article"""
+  title: String!
+
+  """Contenu de l'article"""
+  content: String!
+
+  """Auteur de l'article"""
+  author: String!
+}
+
+input UpdateArticleInput {
+  """Titre de l'article"""
+  title: String
+
+  """Contenu de l'article"""
+  content: String
+
+  """Auteur de l'article"""
+  author: String
+  id: Int!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstname: String
+  lastname: String
+}
+
+input UpdateUserInput {
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  id: Int!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}

@@ -9,7 +9,9 @@ export class ArticlesResolver {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Mutation(() => Article)
-  createArticle(@Args('createArticleInput') createArticleInput: CreateArticleInput) {
+  createArticle(
+    @Args('createArticleInput') createArticleInput: CreateArticleInput,
+  ) {
     return this.articlesService.create(createArticleInput);
   }
 
@@ -19,13 +21,18 @@ export class ArticlesResolver {
   }
 
   @Query(() => Article, { name: 'article' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: string) {
     return this.articlesService.findOne(id);
   }
 
   @Mutation(() => Article)
-  updateArticle(@Args('updateArticleInput') updateArticleInput: UpdateArticleInput) {
-    return this.articlesService.update(updateArticleInput.id, updateArticleInput);
+  updateArticle(
+    @Args('updateArticleInput') updateArticleInput: UpdateArticleInput,
+  ) {
+    return this.articlesService.update(
+      updateArticleInput.id,
+      updateArticleInput,
+    );
   }
 
   @Mutation(() => Article)
