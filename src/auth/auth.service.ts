@@ -61,9 +61,10 @@ export class AuthService {
     if (existingUser) {
       throw new UnauthorizedException('Email already exists');
     }
+    const hashedPassword = await argon2.hash(password);
     const user = await this.usersService.create({
       email,
-      password,
+      password: hashedPassword,
       firstname,
       lastname,
     });
