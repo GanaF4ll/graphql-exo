@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -15,8 +14,18 @@ export class UsersService {
   async create(createUserInput: CreateUserInput) {
     const { email, password, firstname, lastname } = createUserInput;
 
+    const formattedFirstname =
+      firstname.charAt(0).toUpperCase() + firstname.slice(1);
+    const formattedLastname = lastname.toUpperCase();
+    const formattedEmail = email.toLowerCase();
+
     const user = await this.prisma.users.create({
-      data: { email, password, firstname, lastname },
+      data: {
+        email: formattedEmail,
+        password,
+        firstname: formattedFirstname,
+        lastname: formattedLastname,
+      },
     });
 
     if (!user) {

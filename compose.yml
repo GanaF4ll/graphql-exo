@@ -1,0 +1,25 @@
+services:
+  nestjs:
+    build:
+      context: .
+      dockerfile: docker/nest-api/Dockerfile
+    container_name: nestjs
+    environment:
+      - PORT=3001
+      - NODE_ENV=development
+      - JWT_SECRET=${JWT_SECRET}
+      # - FRONTEND_URL=${FRONTEND_URL}
+      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - ./src:/app/src
+    ports:
+      - '3001:3001'
+      - '5555:5555'
+
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./src
+          target: /app/src
+        - action: rebuild
+          path: package.json
