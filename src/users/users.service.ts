@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -43,10 +44,14 @@ export class UsersService {
     return user;
   }
 
-  findByEmail(email: string) {
-    const user = this.prisma.users.findFirst({
+  async findByEmail(email: string) {
+    const user = await this.prisma.users.findFirst({
       where: { email },
     });
+
+    if (!user) {
+      return null;
+    }
 
     return user;
   }

@@ -18,10 +18,10 @@ model Articles {
 
 model Users {
   id         Int       @id @default(autoincrement())
-  email      String    @db.Char(1)
+  email      String    @db.VarChar(255)
   password   String    @db.VarChar
-  firstname  String?   @db.Char(1)
-  lastname   String?   @db.Char(1)
+  firstname  String?   @db.VarChar(100)
+  lastname   String?   @db.VarChar(100)
   created_at DateTime? @default(now()) @db.Timestamp(6)
   updated_at DateTime? @default(now()) @db.Timestamp(6)
 }

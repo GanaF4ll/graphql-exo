@@ -14,7 +14,7 @@ export class AuthService {
 
   private setCookieToken(
     response: Response,
-    userId: string,
+    userId: number,
     email: string,
   ): string {
     const payload = { email, sub: userId };
@@ -36,10 +36,7 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
     if (user && (await argon2.verify(user.password, password))) {
       const { password, ...result } = user;
-      return {
-        ...result,
-        id: result.id.toString(),
-      };
+      return result;
     }
     return null;
   }
@@ -73,7 +70,7 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('User not created');
     }
-    const token = this.setCookieToken(response, user.id.toString(), user.email);
+    const token = this.setCookieToken(response, user.id, user.email);
 
     return {
       user,
